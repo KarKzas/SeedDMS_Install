@@ -66,7 +66,7 @@ nano /var/www/html/dms/conf/settings.xml
       partitionSize = "2000000"
       dropFolderDir = ""
       cacheDir = "/var/www/html/dms/data/cache/"
-      backupDir = "/var/www/html/dms/data/"
+      backupDir = "/var/www/html/dms/data/backup/"
     />
 
 <database
