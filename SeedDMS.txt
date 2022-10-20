@@ -16,6 +16,7 @@ systemctl enable mariadb && systemctl start mariadb
 # Secure database
 mysql_secure_installation
 
+# Install Log and Zend
 pear install Log
 pear channel-discover pear.dotkernel.com/zf1/svn
 pear install zend/zend
