@@ -21,6 +21,7 @@ systemctl enable mariadb && systemctl start mariadb
 # Secure database
 mysql_secure_installation
 
+#Install Pear Log
 pear install Log
 
 # Create the dms directory and go there
