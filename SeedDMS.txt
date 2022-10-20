@@ -1,0 +1,102 @@
+# Install Apache
+apt install apache2 apache2-utils -y
+
+# Start the Apache2 service and enable it to start at system boot.
+systemctl enable apache2 && systemctl start apache2
+
+# Install PHP
+apt install php php-cli php-mysql libapache2-mod-php php-gd php-xml php-curl php-common php7.4-zip php7.4-mbstring php7.4-gd php7.4-sqlite3 php7.4-mysqli php-pear php-http-webdav-server -y
+
+# Install the database server.
+apt-get install mariadb-server -y
+
+# Start the MariaDB service and enable it to start at system boot.
+systemctl enable mariadb && systemctl start mariadb
+
+# Secure database
+mysql_secure_installation
+
+pear install Log
+
+# Create the dms directory and go there
+mkdir -p /var/www/html/dms
+cd /var/www/html/dms
+
+#Download SeedDMS File
+wget https://sourceforge.net/projects/seeddms/files/seeddms-6.0.20/seeddms-quickstart-6.0.20.tar.gz
+tar -xvzf seeddms-quickstart-6.0.20.tar.gz
+rm seeddms-quickstart-6.0.20.tar.gz
+
+# copy files to www directory
+cp -r /var/www/html/dms/seeddms60x/* /var/www/html/dms
+cp -r /var/www/html/dms/seeddms-6.0.20/* /var/www/html/dms
+
+#Remove the empty directories
+rm -rf /var/www/html/dms/seeddms60x
+rm -rf /var/www/html/dms/seeddms-6.0.20
+
+# Grant ownership to web server user
+chown -R www-data:www-data /var/www/html/dms
+
+# MARIADB / MYSQL CONFIG - CHANGE AS DESIRED
+
+mariadb -u root
+CREATE DATABASE seeddms;
+CREATE USER 'seeddms'@'localhost' IDENTIFIED BY 'seeddms';
+GRANT ALL PRIVILEGES ON seeddms.* TO 'seeddms'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+exit;
+
+# Edit
+nano /var/www/html/dms/conf/settings.xml
+
+<--
+   <server   
+      rootDir = "/var/www/html/dms/"
+      httpRoot = "/dms/"
+      contentDir = "/var/www/html/dms/data"
+      stagingDir = "/var/www/html/dms/data/staging/"
+      luceneDir = "/var/www/html/dms/data/lucene/"
+      logFileEnable = "true"
+      logFileRotation = "d"
+      enableLargeFileUpload = "false"
+      partitionSize = "2000000"
+      dropFolderDir = ""
+      cacheDir = "/var/www/html/dms/data/cache/"
+      backupDir = "/var/www/html/dms/data/"
+    />
+
+<database
+      dbDriver = "mysql"
+      dbHostname = "localhost"
+      dbDatabase = "seeddms"
+      dbUser = "seeddms"
+      dbPass = "seeddms"
+      doNotCheckVersion = "false"
+    />
+
+<server
+      coreDir = ""
+      luceneClassDir = ""
+      contentOffsetDir = "1048576"
+      maxDirID = "0"
+      updateNotifyTime = "86400"
+      extraPath = "/var/www/html/dms/pear"
+      maxExecutionTime = "30"
+      cmdTimeout = "10"
+    />
+-->
+
+# Copy Pear folder
+cp -r /var/www/html/dms/pear/* /var/www/html/
+
+# Enable Mod_Rewrite
+a2enmod rewrite
+
+# restart apache service
+service apache2 restart
+
+# Create ENABLE_INSTALL_TOOL file
+touch /var/www/html/dms/conf/ENABLE_INSTALL_TOOL
+
+# Go to http://SERVER_IP/dms/install
