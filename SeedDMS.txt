@@ -89,7 +89,7 @@ nano /var/www/html/dms/conf/settings.xml
     />
 -->
 
-# Copy Pear folder
+# Copy Pear folder to previous parent folder
 cp -r /var/www/html/dms/pear/ /var/www/html/
 
 # Enable Mod_Rewrite
