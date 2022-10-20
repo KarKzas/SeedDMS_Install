@@ -1,4 +1,7 @@
-# SeedDMS_Install
+# SeedDMS Install
+Tested with SeedDMS 6.0.20 on Debian 11
+Change dms folder name with anything you want
+Change database name, username and password with anything you want
 
 # Install Apache
 apt install apache2 apache2-utils -y
