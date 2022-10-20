@@ -1,4 +1,5 @@
-# SeedDMS_Install
+# SeedDMS Install
+Tested with SeedDMS 6.0.20 on Debian 11. Change dms folder name with anything you want. Change database name, username and password with anything you want
 
 # Install Apache
 apt install apache2 apache2-utils -y
@@ -18,13 +19,14 @@ systemctl enable mariadb && systemctl start mariadb
 # Secure database
 mysql_secure_installation
 
+# Install Pear Log
 pear install Log
 
 # Create the dms directory and go there
 mkdir -p /var/www/html/dms
 cd /var/www/html/dms
 
-#Download SeedDMS File
+# Download SeedDMS File
 wget https://sourceforge.net/projects/seeddms/files/seeddms-6.0.20/seeddms-quickstart-6.0.20.tar.gz
 tar -xvzf seeddms-quickstart-6.0.20.tar.gz
 rm seeddms-quickstart-6.0.20.tar.gz
@@ -33,7 +35,7 @@ rm seeddms-quickstart-6.0.20.tar.gz
 cp -r /var/www/html/dms/seeddms60x/* /var/www/html/dms
 cp -r /var/www/html/dms/seeddms-6.0.20/* /var/www/html/dms
 
-#Remove the empty directories
+# Remove the empty directories
 rm -rf /var/www/html/dms/seeddms60x
 rm -rf /var/www/html/dms/seeddms-6.0.20
 
