@@ -17,6 +17,8 @@ systemctl enable mariadb && systemctl start mariadb
 mysql_secure_installation
 
 pear install Log
+pear channel-discover pear.dotkernel.com/zf1/svn
+pear install zend/zend
 
 # Create the dms directory and go there
 mkdir -p /var/www/html/dms
@@ -88,7 +90,7 @@ nano /var/www/html/dms/conf/settings.xml
 -->
 
 # Copy Pear folder
-cp -r /var/www/html/dms/pear/* /var/www/html/
+cp -r /var/www/html/dms/pear/ /var/www/html/
 
 # Enable Mod_Rewrite
 a2enmod rewrite
