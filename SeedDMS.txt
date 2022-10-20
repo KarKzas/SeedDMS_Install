@@ -17,6 +17,7 @@ systemctl enable mariadb && systemctl start mariadb
 mysql_secure_installation
 
 # Install Log and Zend
+pear channel-update pear.php.net
 pear install Log
 pear channel-discover pear.dotkernel.com/zf1/svn
 pear install zend/zend
@@ -24,6 +25,9 @@ pear install zend/zend
 # Create the dms directory and go there
 mkdir -p /var/www/html/dms
 cd /var/www/html/dms
+
+# is you are installing on /var/www/html, delete default index file
+rm /var/www/html/index.html
 
 #Download SeedDMS File
 wget https://sourceforge.net/projects/seeddms/files/seeddms-6.0.20/seeddms-quickstart-6.0.20.tar.gz
